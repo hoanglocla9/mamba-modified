@@ -479,7 +479,7 @@ class Mamba2AttentionModel(Mamba2PreTrainedModel):
         tmp_layers = []
         for idx in range(config.num_hidden_layers):
             if idx in config.attn_layer_idxs:
-                tmp_layers.append(MHA(**config.attn_params, d_conv=config.conv_kernel, layer_idx=idx))
+                tmp_layers.append(MHA(**config.attn_params, embed_dim=config.hidden_size, d_conv=config.conv_kernel, layer_idx=idx))
             else:
                 tmp_layers.append(Mamba2Block(config, layer_idx=idx))
         self.layers = nn.ModuleList(tmp_layers) # [Mamba2Block(config, layer_idx=idx) for idx in range(config.num_hidden_layers)]

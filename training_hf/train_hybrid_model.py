@@ -58,7 +58,7 @@ config = HybridMamba2Config(
         chunk_size=256,
         tie_word_embeddings=True,
         attn_layer_idxs=[6, 10],
-        attn_params = {'embed_dim': 768, 'num_heads': 24, 'num_heads_kv': 24, 'head_dim':64, 'mlp_dim': 32, 'causal': True}
+        attn_params = {'num_heads': 32,  'head_dim':128, 'causal': True} # 'num_heads_kv': 24, 'mlp_dim': 32, 
 ) 
 
 
