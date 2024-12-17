@@ -54,15 +54,21 @@ class Block(nn.Module):
             if self.residual_in_fp32:
                 residual = residual.to(torch.float32)
         else:
-            hidden_states, residual = layer_norm_fn(
+            # hidden_states, residual = layer_norm_fn(
+            #     hidden_states,
+            #     self.norm.weight,
+            #     self.norm.bias,
+            #     residual=residual,
+            #     prenorm=True,
+            #     residual_in_fp32=self.residual_in_fp32,
+            #     eps=self.norm.eps,
+            #     is_rms_norm=isinstance(self.norm, RMSNorm)
+            # )
+            hidden_states, residual = self.norm(
                 hidden_states,
-                self.norm.weight,
-                self.norm.bias,
                 residual=residual,
                 prenorm=True,
-                residual_in_fp32=self.residual_in_fp32,
-                eps=self.norm.eps,
-                is_rms_norm=isinstance(self.norm, RMSNorm)
+                residual_in_fp32=self.residual_in_fp32
             )
         hidden_states = self.mixer(hidden_states, inference_params=inference_params, **mixer_kwargs)
 
